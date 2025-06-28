@@ -1,0 +1,208 @@
+/* Signup page css*/
+
+
+@import url('https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&family=Pacifico&display=swap');
+.signupFormDiv {
+  margin: 10px auto;
+  box-shadow: -10px 10px 50px rgba(0, 0, 0, 0.9);
+  width: 450px;
+  box-sizing: border-box;
+  padding: 40px;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.9);
+  
+}
+body{
+  margin: 0;
+  padding: 0;
+}
+
+hr{
+  margin: 0px;
+  padding: 0px;
+}
+
+
+.topText{
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+    
+}
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.itemDiv input {
+  width: 100%;
+  padding: 10px 35px 10px 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.signupFormDiv h4 {
+  color: #29a2d2;
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+}
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ 
+}
+.fullScreen {
+  background-image:url('assets/roombgc2.jpeg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+
+.signupForm input {
+  border-radius:5px;
+  border-color: #a2d2ff;
+  box-sizing: border-box;
+  padding-left: 30px;
+  border : 3px solid #ccc;
+  width: 98%;
+  height: 35px;
+  font-size: 16px;
+}
+.signupForm input:focus {
+  outline: none;
+  border-color: #a2d2ff;
+  box-shadow: 0 0 10px #1236ea;
+}
+select {
+  border-radius: 5px;
+  border : 3px solid #ccc;
+  width: 98%;
+  height: 35px;
+ 
+}
+select:focus {
+  outline: none;
+  border-color: #a2d2ff;
+  box-shadow: 0 0 10px #1236ea;
+}
+.signupFormDiv label {
+  color: white;
+  margin-top: 1rem;
+  font-size: 17px;
+  font-weight: 500;
+  /* color: #0fdce7; */
+  margin-left: 4px;
+}
+.itemDiv {
+  position: relative;
+}
+
+.icons {
+  position: absolute; /*it makes icons to appear above on the inputs */
+  left: 8px;
+  top: 50px;
+  opacity: 0.7;
+}
+
+/* Login page css*/
+.loginFormDiv{
+  margin: 150px;
+}
+.errorsMessage{
+  margin-bottom: -20px;
+  color: #ff0000;
+}
+.loginScreen{
+  height: 100vh;
+  background-image: linear-gradient(to right, #ffffff, #6f8fb5);
+
+  background-image:url('assets/roombgc1.jpeg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
+.loginImage{
+  height: 50vh;
+  
+  
+}
+.loginForm{
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 30px;
+  box-shadow: -10px 0px 20px;
+  width: 450px;
+  margin-top: -50px;
+}
+
+.quoteBox{
+  margin-top: -70px;
+}
+.loginForm label {
+  color: rgb(255, 255, 255);
+  font-weight: 500;
+}
+.loginForm h3{
+  color: rgb(202, 78, 78);
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+}
+.quote{
+  
+  font-size: 30px;
+  color: #ffffff;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Spinner.css */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+@keyframes blinkColor {
+  0%   { color: red; }
+  50%  { color: hotpink; }
+  100% { color: red; }
+}
+
+.blink-text {
+  animation: blinkColor 1s infinite;
+  font-weight: bold;
+}
+
+.custom-modal-size {
+  max-width: 800px; /* Increase as needed */
+  width: 90vw;
+ 
+}
+
+.custom-modal-bg {
+  background-color: #cdb4db;  /* Light lavender/pink background */
+  border-radius: 20px;
+  padding: 1rem;
+  border: 2px solid #c084fc;
+}
+
+
+
+
