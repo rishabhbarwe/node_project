@@ -79,7 +79,7 @@ return (
             {/* RIGHT SIDE - Image */}
             <div className="col-md-6 d-flex justify-content-end align-items-center pe-5">
               <img
-                src={`https://room-finder-1ayo.onrender.com${property.building_image}`}
+                src={`${property.building_image}`}
                 alt={property.building_name}
                 style={{
                   width: "300px",

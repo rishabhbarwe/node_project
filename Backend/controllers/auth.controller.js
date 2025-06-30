@@ -3,6 +3,9 @@ const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const { sendOTPEmail } = require('../utils/mailer');
+
+
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
 // ------------------------------
@@ -38,6 +41,47 @@ exports.register = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+//Send OTP to reset password
+
+exports.sendOtp = async (req, res) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit
+  const expiresAt = new Date(Date.now() + 10 * 60000); // 10 mins
+
+  user.otp = { code: otp, expiresAt };
+  await user.save();
+
+  await sendOTPEmail(email, otp);
+
+  res.json({ message: 'OTP sent to email' });
+};
+
+//Verify OTP
+
+
+exports.resetPassword = async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  if (!user.otp || user.otp.code !== otp || user.otp.expiresAt < new Date()) {
+    return res.status(400).json({ message: 'Invalid or expired OTP' });
+  }
+
+  user.password = await bcrypt.hash(newPassword, 10);
+  user.otp = undefined;
+  await user.save();
+
+  res.json({ message: 'Password successfully updated' });
+};
+
+
 
 // ------------------------------
 // Login Controller

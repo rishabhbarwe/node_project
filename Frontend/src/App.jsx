@@ -6,7 +6,7 @@ import TenantDashboard from '../src/screens/Tenant/TenantDashboard';
 import TenantDetails from '../src/screens/Owner/TenantDetails';
 import RentOverview from '../src/screens/Owner/RentOverview';
 import Myproperties from '../src/screens/Owner/Myproperties';
-import TenantRequests from '../src/screens/Owner/TenantRequests';
+import TenantRequests from '../src/screens/Tenant/TenantRequests';
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import {Provider} from 'react-redux';
 import { Store } from './reduxsetup/Store';

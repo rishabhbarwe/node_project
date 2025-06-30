@@ -6,14 +6,14 @@ const TenantRequests = () => {
   const [loading, setLoading] = useState(true);
 
   // Replace this with actual token from login state
-  const token = localStorage.getItem("access");
+  const token = localStorage.getItem("tenant_token");
 
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await axios.get("https://room-finder-1ayo.onrender.com/api/tenant/requests/", {
+        const response = await axios.get("http://localhost:8000/api/requests/tenant/", {
           headers: {
-            Authorization: `Token ${token}`
+            Authorization: `Bearer ${token}`
           }
         });
         setRequests(response.data);

@@ -20,12 +20,13 @@ useEffect(() => {
     
     const fetchRequests = async () => {
       try {
-        const response = await axios.get("https://room-finder-1ayo.onrender.com/api/owner/requests/", {
+        const response = await axios.get("http://localhost:8000/api/requests/tenant/", {
           headers: {
-            Authorization: `Token ${localStorage.getItem("owner_token")}`
+            Authorization: `Bearer ${localStorage.getItem("tenant_token")}`
           }
         });
         setRequests(response.data);
+        console.log("Requests:", response.data);
       } catch (error) {
         console.error("Error fetching owner requests:", error);
       } finally {
@@ -39,9 +40,9 @@ useEffect(() => {
     const handleAction = async (requestId, action) => {
     try {
       await axios.patch(
-        `https://room-finder-1ayo.onrender.com/api/request/update/${requestId}/`,
+        `http://localhost:8000/api/requests/update/${requestId}/`,
         { status: action },
-        { headers: { Authorization: `Token ${localStorage.getItem("owner_token")}` } }
+        { headers: { Authorization: `Bearer ${localStorage.getItem("owner_token")}` } }
       );
       // Refresh list after update
       setRequests((prev) =>
@@ -56,17 +57,17 @@ useEffect(() => {
   
 useEffect(() => {
   const fetchMyProperties = async () => {
-  const token = localStorage.getItem('owner_token');  // get saved token
-  console.log("Token : ",token);
-  if (!token) {
+  const Bearer = localStorage.getItem('owner_token');  // get saved Bearer
+  console.log("Bearer : ",Bearer);
+  if (!Bearer) {
     console.log("User not logged in");
     return;
   }
 
   try {
-    const response = await axios.get('https://room-finder-1ayo.onrender.com/api/my-properties/', {
+    const response = await axios.get('http://localhost:8000/api/properties/my/', {
       headers: {
-        Authorization: `Token ${token}`,
+        Authorization: `Bearer ${Bearer}`,
       },
     });
     console.log("Properties:", response.data);
@@ -255,12 +256,12 @@ const facilityNameMap = {
     setLoading(true);
 
     // Submit form to backend API
-    const token = localStorage.getItem('owner_token');
-    console.log("Token : ",token)
+    const Bearer = localStorage.getItem('owner_token');
+    console.log("Bearer : ",Bearer)
     try {
-      const response = await axios.post("https://room-finder-1ayo.onrender.com/api/upload-property/", data, {
+      const response = await axios.post("http://localhost:8000/api/properties/", data, {
            headers: {
-            'Authorization': `Token ${token}`,  // ✅ Correct placement
+            'Authorization': `Bearer ${Bearer}`,  // ✅ Correct placement
             'Content-Type': 'multipart/form-data'
             },
          });
@@ -276,7 +277,12 @@ const facilityNameMap = {
     setTimeout(() => {
       showToast();
     }, 1200);
+    // setTimeout(() => {
+    //   setFormData(initialFormData);
+    // }, 1200);
   };
+    
+  
    
   const handleLogout = ()=>{
     localStorage.clear();
@@ -857,8 +863,8 @@ const facilityNameMap = {
             ) : (
               requests.map((req) => (
                 <tr key={req.id}>
-                  <td>{req.tenant_name}</td>
-                  <td>{req.property_name}</td>
+                  <td>{req.tenant}</td>
+                  <td>{req.property.building_name}</td>
                   <td>
                     <span
                       className={`badge ${

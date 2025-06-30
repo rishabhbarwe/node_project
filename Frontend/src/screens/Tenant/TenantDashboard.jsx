@@ -47,10 +47,10 @@ const TenantDashboard = () => {
     if (isRequested) {
       // ❌ UNSEND REQUEST - DELETE
       const response = await axios.delete(
-        `https://room-finder-1ayo.onrender.com/api/property-request/${propertyId}/`,
+        `http://localhost:8000/api/requests/${propertyId}`,
         {
           headers: {
-            Authorization: `Token ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -61,11 +61,12 @@ const TenantDashboard = () => {
     } else {
       // ✅ SEND REQUEST - POST
       const response = await axios.post(
-        "https://room-finder-1ayo.onrender.com/api/property-request/",
-        { property_id: propertyId },
+      "http://localhost:8000/api/requests/",
+      { property_id: propertyId },  // ✅ Body
+       
         {
           headers: {
-            Authorization: `Token ${token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }
@@ -108,9 +109,9 @@ useEffect(() => {
   const fetchActivity = async () => {
     try {
       const token = localStorage.getItem("tenant_token");
-      const res = await axios.get("https://room-finder-1ayo.onrender.com/tenant/request-history/", {
+      const res = await axios.get("http://localhost:8000/api/requests/tenant", {
         headers: {
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       setActivity(res.data);
@@ -130,9 +131,9 @@ useEffect(() => {
     if (!token) return;
 
     try {
-      const response = await axios.get("https://room-finder-1ayo.onrender.com/api/requested-properties/", {
+      const response = await axios.get("http://localhost:8000/api/requests/requested-ids/", {
         headers: {
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -169,7 +170,7 @@ useEffect(() => {
   console.log("Filters : ",selected)
 
   try {
-    const response = await axios.get("https://room-finder-1ayo.onrender.com/api/properties/", {
+    const response = await axios.get("http://localhost:8000/api/properties/", {
       params: {
         room_types: roomTypes.join(","),
         locations: locations.join(","),
@@ -220,9 +221,9 @@ useEffect(() => {
     return;
   }
     try {
-      const response = await axios.get("https://room-finder-1ayo.onrender.com/api/tenant/properties/", {
+      const response = await axios.get("http://localhost:8000/api/properties/all", {
       headers: {
-        Authorization: `Token ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
       console.log("Response : ",response.data)
@@ -503,7 +504,7 @@ useEffect(() => {
     </div>
   </div>
 ): (gettingOwnersProperty.slice().map((property) => (
-  <div key={property.id} className="card my-3" style={{ backgroundColor: "#eee4e1" }}>
+  <div key={property._id} className="card my-3" style={{ backgroundColor: "#eee4e1" }}>
     <div className="row g-0"> {/* Bootstrap row with no gutters */}
       
       {/* LEFT SIDE - Property Info */}
@@ -543,20 +544,20 @@ useEffect(() => {
           </div>
          <button
   className="btn btn-primary"
-  onClick={() => handleSendRequest(property.id)}
-  disabled={loadingRequest[property.id]}  // Optional: disable while loading
+  onClick={() => handleSendRequest(property._id)}
+  disabled={loadingRequest[property._id]}  // Optional: disable while loading
 >
-  {loadingRequest[property.id] ? (
+  {loadingRequest[property._id] ? (
     <>
       <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
       Loading...
     </>
   ) : (
-    requestedProperties[property.id] ? "Unsend Request" : "Send Request"
+    requestedProperties[property._id] ? "Unsend Request" : "Send Request"
   )}
 </button>
 
-            <div> {requestedProperties[property.id] && (
+            <div> {requestedProperties[property._id] && (
               <em className="blink-text">You requested this property, check messages for owner response</em>
 
             )}</div>

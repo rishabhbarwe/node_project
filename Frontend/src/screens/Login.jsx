@@ -97,67 +97,68 @@ let errors = {};
     return valid;
   };
 
- const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
-  // 2️⃣ Show spinner
 
-  if(validate()){
-      setLoading(true);
-      try {
-    const response = await login(formData); // Calls Django login API
-    console.log("Login success:", response.data);
-    if(response.data.user.usertype === "tenant"){
-           localStorage.setItem("tenant_token", response.data.token);
+  // 1. Validate form
+  if (!validate()) return;
+
+  setLoading(true); // 2. Show loading spinner
+
+  try {
+    const response = await login(formData); // Your login API
+
+    const { user, token } = response.data;
+
+    // Save common data
+    localStorage.setItem("Name", user.name);
+
+    // Save token based on user type
+    if (user.usertype === "tenant") {
+      localStorage.setItem("tenant_token", token);
+    } else if (user.usertype === "owner") {
+      localStorage.setItem("owner_token", token);
     }
-    else if(response.data.user.usertype === "owner"){
-          localStorage.setItem("owner_token", response.data.token);
-    }
 
-    localStorage.setItem("Name", response.data.user.name);
-    
-    // Save token/user info if needed
-     if(formData.remember){
-        
-         if(response.data.user.usertype === "tenant"){
-           localStorage.setItem("tenant_token", response.data.token);
-          }
-          else if(response.data.user.usertype === "owner"){
-          localStorage.setItem("owner_token", response.data.token);
-         }
-
+    // Save token if remember me is checked (optional redundancy)
+    if (formData.remember) {
+      if (user.usertype === "tenant") {
+        localStorage.setItem("tenant_token", token);
+      } else if (user.usertype === "owner") {
+        localStorage.setItem("owner_token", token);
       }
-    
+    }
 
-    if (response.data.user.usertype === "tenant") {
+    // Redirect to respective dashboard
+    if (user.usertype === "tenant") {
       navigate("/tenant");
     } else {
-      console.log("Usertype : ",response.data.user.usertype)
       navigate("/owner");
     }
+
   } catch (error) {
     console.error("Login error:", error.response?.data);
-
-   const data = error.response?.data;
+    const data = error.response?.data;
+    const errors = {}; // Declare this to avoid undefined error
 
     if (data?.username_or_email) {
-      errors.username_or_email = "Username or email not found"; // Custom error
+      errors.username_or_email = "Username or email not found";
     }
 
     if (data?.password) {
-      errors.password = "Incorrect password"; // Custom error
+      errors.password = "Incorrect password";
     }
 
     if (data?.non_field_errors) {
-      // General login error like "Invalid credentials"
-      errors.password = data.non_field_errors[0]; // or your custom message
+      errors.password = data.non_field_errors[0];
     }
 
     setError(errors);
-  
   }
-    setLoading(false); // 3️⃣ Hide spinner
-  }
+
+  setLoading(false); // 3. Hide spinner
 };
+
 
 
   const redirectToSignUp = () => {

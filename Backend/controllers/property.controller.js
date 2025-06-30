@@ -8,10 +8,21 @@ exports.createProperty = async (req, res) => {
     const {
       building_name, owner_name, address, city, state,
       pincode, mobile, alt_mobile, email, alt_email,
-      rent_from, rent_to, facilities, room_types
+      rent_from, rent_to, room_types
     } = req.body;
 
     const building_image = req.file?.path || null; // Cloudinary image URL (set via multer + cloudinary)
+
+    let facilities = req.body.facilities;
+
+    if (typeof facilities === 'string') {
+       try {
+          facilities = JSON.parse(facilities);
+       } catch (err) {
+            return res.status(400).json({ message: "Invalid facilities format" });
+      }
+    }
+
 
     const property = new Property({
       owner: req.user._id, // set by auth middleware
@@ -28,7 +39,7 @@ exports.createProperty = async (req, res) => {
       alt_email,
       rent_from,
       rent_to,
-      facilities: facilities || {},
+      facilities,
       room_types: room_types || []
     });
 
