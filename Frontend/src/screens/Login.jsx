@@ -201,7 +201,9 @@ const handleSubmit = async (e) => {
         <div className="container d-flex flex-column justify-content-center align-items-center">
         <div className="h-25 text-center quoteBox">
   <blockquote className="blockquote">
-    <p className="mb-3 fs-4 fst-italic quote">
+    <p className="mb-3 fs-4 fst-italic quote" style={{
+      color : "#003049"
+    }}>
       "If finding rooms is your desire, honestly this site will never tire!"
     </p>
     <footer className="blockquote-footer text-muted">Former Room Finder</footer>
@@ -273,12 +275,19 @@ const handleSubmit = async (e) => {
         "Login"
       )}
               </button>
-              <div className="text-center d-flex justify-content-center align-items-center text-white ms-3 mt-2">
+              <div className="text-center d-flex justify-content-center align-items-center text-white ms-2 mt-2" 
+                  
+                  >
+                    <p className="forgotPass fw-bold" onClick={()=>{navigate("/forgot")}}>Forgot password?</p>
+                  
+                  </div>
+              <div className="text-center d-flex justify-content-center align-items-center text-white ms-3">
                 New here?
                 <button type="button" class="btn text-danger text-decoration-underline" onClick={redirectToSignUp}>
                   Register
                   </button>
                   </div>
+                  
             </form>
           </div>
         </div>

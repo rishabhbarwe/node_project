@@ -11,6 +11,7 @@ import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import {Provider} from 'react-redux';
 import { Store } from './reduxsetup/Store';
 import Messages from '../src/screens/Tenant/Messages';
+import ForgotPassword from './screens/ForgotPassword';
 
 
 
@@ -39,6 +40,7 @@ const App = ()=>{
                   <Route path='/tenant' element={<TenantDashboard/>}></Route>
                   <Route path='/signup' element={<Signup/>}></Route>
                   <Route path='/owner' element={<OwnerDashboard/>}></Route>
+                  <Route path='/forgot' element={<ForgotPassword/>}></Route>
 
                   {/*Owner side url bar routes */}
                   <Route path='/teantdetailsowner' element={<TenantDetails/>}></Route>

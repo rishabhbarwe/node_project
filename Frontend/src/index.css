@@ -201,6 +201,14 @@ select:focus {
   border-radius: 20px;
   padding: 1rem;
   border: 2px solid #c084fc;
+  
+}
+
+.forgotPass:hover{
+        color :rgb(51, 244, 12);
+        text-decoration: underline;
+        cursor: pointer;
+       
 }
 
 
